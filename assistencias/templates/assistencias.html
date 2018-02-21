@@ -1,0 +1,52 @@
+{% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'assistencias/assistencias.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'assistencias/style.css' %}" />
+
+{% csrf_token %}
+<script type="text/javascript">
+// using jQuery
+var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+</script>
+
+<p>ASSISTENCIAS</p>
+<ul class="menu">
+  <li><a href="#Pedidos">Pedidos</a></li>
+  <li><a href="{% url 'assistencias:pedidos_assistencia' %}">Assistencias</a></li>
+  <li><a href="#Contactos">Contactos</a></li>
+  <li><a href="#Sobre">Sobre</a></li>
+</ul>
+
+<form class="form-inline" id="form_pessoas" action="">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" name="email">
+    </div>
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input type="text" class="form-control" name="nome">
+    </div>
+    <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input type="tel" class="form-control" name="telefone">
+    </div>
+        <label for="morada">Morada</label>
+        <input type="morada" class="form-control" id="morada">
+    <button type="button" class="btn btn-default" id="form_pessoas_novo" >Novo</button>
+    <button type="buton" class="btn btn-default" id="form_pessoas_procurar">Procurar</button>
+</form>
+
+
+
+{% for assistencia in latest_assistencia_list %}
+  <tr onclick="document.location = '{% url 'assistencias:detalhe' assistencia.id%}'">
+    <td>{{assistencia.cliente}}</td>
+    <td>{{assistencia.topico_text}}</td>
+    <td>{{assistencia.descricao_text}}</td>
+    <td>{{assistencia.valor}}</td>
+    <td>{{assistencia.pub_date}}</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>

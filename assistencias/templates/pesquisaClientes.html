@@ -1,0 +1,60 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assistencias/style.css' %}" />
+
+<ul class="menu">
+  <li><a href="{% url 'assistencias:index' %}">Assistencias</a></li>
+  <li><a href="#Pedidos">Pedidos</a></li>
+  <li><a href="#Contactos">Contactos</a></li>
+  <li><a href="#Sobre">Sobre</a></li>
+</ul>
+
+<table id="tabela_assistencias">
+    <th>id</th>
+  <th>nome_text</th>
+  <th>telefone_text</th>
+  <th>email_text</th>
+  <th>morada_text</th>
+  <th>localidade_text</th>
+   <th>codigo_postal_text</th>
+<tbody>
+<div class="container">
+  <div class="formAssistencia">
+  <form action="{% url 'assistencias:pesquisa_assistencia'%}" method="post">
+      {% csrf_token %}
+      {{formAssistencia.as_p}}
+      <input type="submit" value="Pesquisa" />
+  </form>
+  </div>
+
+  <div class="formClientes">
+    <form action="{% url 'assistencias:pesquisa_cliente'%}" method="post">
+      {% csrf_token %}
+      {{formCliente.as_p}}
+      <input type="radio" name="novoCliente" value="Novo Cliente"> Novo Cliente<br>
+      <input type="submit" value="Pesquisa/Adicionar Clientes" />
+    </form>
+  </div>
+
+  <div class="formProdutos">
+    <form action="{% url 'assistencias:pesquisa_produto'%}" method="post">
+      {% csrf_token %}
+      {{formProduto.as_p}}
+      <input type="submit" value="Pesquisa" />
+      <input type="button" value="Novo Produto" onclick="document.location = '{% url 'assistencias:index' %}'">
+  </div>
+</div>
+
+{% for cliente in clientes %}
+  <tr onclick="document.location = '{% url 'assistencias:atualiza_cliente' cliente.id%}'">
+      <td>{{cliente.id}}</td>
+    <td>{{cliente.nome_text}}</td>
+    <td>{{cliente.telefone_text}}</td>
+    <td>{{cliente.email_text}}</td>
+    <td>{{cliente.morada_text}}</td>
+    <td>{{cliente.localidade_text}}</td>
+      <td>{{cliente.codigo_postal_text}}</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
